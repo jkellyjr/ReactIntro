@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
+        <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+        <script src="https://npmcdn.com/react-router@3.0.2/umd/ReactRouter.min.js"></script>
+
+        <style>
+            body {
+                background-color: #1e90ff;
+                padding: 20px;
+                margin: 0;
+            }
+            h1, h2, p, ul, li {
+                font-family: Helvetica, Arial, sans-serif;
+            }
+            ul.header li {
+                 display: inline;
+                 list-style-type: none;
+                 margin: 0;
+            }
+            ul.header {
+                background-color: #111;
+                padding: 0;
+            }
+            ul.header li a {
+                color: #FFF;
+                font-weight: bold;
+                text-decoration: none;
+                padding: 20px;
+                display: inline-block;
+            }
+            .content {
+                background-color: #FFF;
+                padding: 20px;
+            }
+            .content h2 {
+                padding: 0;
+                margin: 0;s
+            }
+            .content li {
+                margin-bottom: 10px;
+            }
+            .active {
+                background-color: #191970;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <div id="container">
+
+        </div>
+
+        <script type="text/babel">
+            var destination = document.querySelector("#container");
+
+            var {
+                Router,
+                Route,
+                IndexRoute,
+                IndexLink,
+                hashHistory,
+                Link
+            } = ReactRouter;
+
+            var Home = React.createClass({
+                render: function() {
+                    return (
+                        <div>
+                            <h2>Home</h2>
+                            <p>Hello friends... welcome to my home</p>
+                            <p>You dont have to go home, but you have to get the hell out of here.</p>
+                        </div>
+                    );
+                }
+            });
+
+            var GoodStuff = React.createClass({
+                render: function() {
+                    return (
+                        <div>
+                            <p>Here is a list of things I need to do</p>
+                            <ol>
+                                <li>Finish studying for astronomy</li>
+                                <li>Finish cs1632 deliverable 1</li>
+                            </ol>
+                        </div>
+                    );
+                }
+            });
+
+            var Contact = React.createClass({
+                render: function() {
+                    return (
+                        <div>
+                            <p>Want to contact me?</p>
+                            <p>Ill get right on implementing a form</p>
+                        </div>
+                    );
+                }
+            });
+
+            var App =  React.createClass({
+                render: function () {
+                    return (
+                        <div>
+                            <h1>React SPA</h1>
+                            <ul className="header">
+                                <li><IndexLink to="/" activeClassName="active">Home</IndexLink></li>
+                                <li><Link to="/goodstuff" activeClassName="active">Good Stuff</Link></li>
+                                <li><Link to="/contact" activeClassName="active">Contact</Link></li>
+                            </ul>
+                            <div className="content">
+                                {this.props.children}
+                            </div>
+                        </div>
+                    );
+                }
+            });
+
+            ReactDOM.render(
+                // Routing Configuration (i.e. mapping of URL and Views)
+                <Router history = {hashHistory}>
+                    <Route path="/" component = {App}>
+                        // Route Matching
+                        <IndexRoute component = {Home}/>
+                        <Route path="goodstuff" component = {GoodStuff}/>
+                        <Route path="contact" component = {Contact}/>
+                    </Route>
+                </Router>,
+                destination
+            );
+        </script>
+
+    </body>
+
+</html>
